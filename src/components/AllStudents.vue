@@ -1,21 +1,23 @@
 <template>
   <div class="student-list">
+
     <p>inside all sudents vue</p>
-    <table id="student-record" border="1 px">
+    <table v-if="allStudentsData.length" id="student-record" border="1 px">
       <tr>
         <th>Name</th>
         <th>Enrollment Number</th>
         <th>Course</th>
         <th>Delete</th>
       </tr>
-      <tr v-for="student in allStudentsData" :key="student.enrollmentNumber">
+      <tr v-for="(student,index) in allStudentsData" :key="index">
         <td>{{student.name}}</td>
         <td>{{student.enrollmentNumber}}</td>
         <td>{{student.course}}</td>
-        <td><button v-on:click="deleteStudent(student.enrollmentNumber)">Delete</button></td>
+        <td><button v-on:click="deleteStudent(index)">Delete</button></td>
 
       </tr>
     </table>
+    <p v-else>No students are registered</p>
   </div>
 </template>
 
@@ -41,7 +43,8 @@ export default {
     }
   },
   methods:{
-    deleteStudent:function(enroll){
+    deleteStudent:function(index){
+      let enroll=this.allStudentsData[index].enrollmentNumber
       const scope=this
       let url="https://still-harbor-14251.herokuapp.com/delete/"+enroll+"/"
       axios.post(url)
@@ -49,7 +52,7 @@ export default {
             // alert(response.status) 
             if(response.status==204)
             alert("Student with roll number "+enroll+"has been deleted from records")
-            // scope.data.splice(enroll,1)
+            scope.allStudentsData.splice(index,1)
         })
         .catch(function (error) {
           console.log(error);
