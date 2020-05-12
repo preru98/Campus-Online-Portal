@@ -1,6 +1,7 @@
 <template>
   <div class="student-list">
-
+    <button id="createStudent" v-on:click="create">Create Student</button>
+    <create-student v-if="showCreateForm" v-on:created="addStudentToList"></create-student>
     <p>inside all sudents vue</p>
     <table v-if="allStudentsData.length" id="student-record" border="1 px">
       <tr>
@@ -23,6 +24,7 @@
 
 <script>
 import * as axios from 'axios'
+import createStudent from './createStudent.vue'
 export default {
   mounted: function () {
     const scope=this
@@ -39,7 +41,8 @@ export default {
   },
   data:function(){
     return{
-      allStudentsData:[]
+      allStudentsData:[],
+      showCreateForm:0
     }
   },
   methods:{
@@ -57,7 +60,17 @@ export default {
         .catch(function (error) {
           console.log(error);
         })
+    },
+    create:function(){
+      this.showCreateForm=1
+    },
+    addStudentToList:function(student){
+      this.allStudentsData.push(student)
+      this.showCreateForm=0
     }
+  },
+  components:{
+    'create-student':createStudent
   }
 }
 </script>
