@@ -11,6 +11,7 @@
         <th>Course</th>
         <th>Delete</th>
         <th>Map Tag</th>
+        <th>Details</th>
       </tr>
       <tr v-for="(student,index) in allStudentsData" :key="index">
         <td>{{student.name}}</td>
@@ -18,6 +19,7 @@
         <td>{{student.course}}</td>
         <td><button v-on:click="deleteStudent(index)">Delete</button></td>
         <td><button v-on:click="mapStudent(index)">Map</button></td>
+        <td><button v-on:click="detailStudent(index)">Details</button></td>
 
       </tr>
     </table>
@@ -83,7 +85,12 @@ export default {
     mappedStudent:function(){
       this.showTagMappingForm=0
       this.enrollmentNumberToBeRegistered=null
-    }
+    },
+    detailStudent:function(index){
+      let enroll=this.allStudentsData[index].enrollmentNumber
+      localStorage.setItem('student-selected-for-detail',enroll)
+      this.$router.push('/elaborateStudentAdmin')
+    },
   },
   components:{
     'create-student':createStudent,

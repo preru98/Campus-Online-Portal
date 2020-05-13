@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import Grid from '../views/StudentGrid.vue'
+import ElaborateStudentAdmin from '../views/DetailStudentAdminView'
 
 Vue.use(VueRouter)
 
@@ -22,6 +23,12 @@ Vue.use(VueRouter)
     name: 'Grid',
     component: Grid
   },
+  {
+    path: '/elaborateStudentAdmin',
+    name: 'ElaborateStudentAdmin',
+    component: ElaborateStudentAdmin
+  },
+
   
 ]
 
