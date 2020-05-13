@@ -2,6 +2,7 @@
   <div class="student-list">
     <button id="createStudent" v-on:click="create">Create Student</button>
     <create-student v-if="showCreateForm" v-on:created="addStudentToList"></create-student>
+    <map-student v-if="showTagMappingForm" v-bind:rollNumber="enrollmentNumberToBeRegistered" v-on:mapped="mappedStudent"></map-student>
     <p>inside all sudents vue</p>
     <table v-if="allStudentsData.length" id="student-record" border="1 px">
       <tr>
@@ -9,12 +10,14 @@
         <th>Enrollment Number</th>
         <th>Course</th>
         <th>Delete</th>
+        <th>Map Tag</th>
       </tr>
       <tr v-for="(student,index) in allStudentsData" :key="index">
         <td>{{student.name}}</td>
         <td>{{student.enrollmentNumber}}</td>
         <td>{{student.course}}</td>
         <td><button v-on:click="deleteStudent(index)">Delete</button></td>
+        <td><button v-on:click="mapStudent(index)">Map</button></td>
 
       </tr>
     </table>
@@ -25,6 +28,7 @@
 <script>
 import * as axios from 'axios'
 import createStudent from './createStudent.vue'
+import tagMap from './tagMap.vue'
 export default {
   mounted: function () {
     const scope=this
@@ -42,7 +46,10 @@ export default {
   data:function(){
     return{
       allStudentsData:[],
-      showCreateForm:0
+      showCreateForm:0,
+      showTagMappingForm:0,
+      enrollmentNumberToBeRegistered:null
+      // allMappedStudents:[]
     }
   },
   methods:{
@@ -67,10 +74,20 @@ export default {
     addStudentToList:function(student){
       this.allStudentsData.push(student)
       this.showCreateForm=0
+    },
+    mapStudent:function(index){
+      let enroll=this.allStudentsData[index].enrollmentNumber
+      this.enrollmentNumberToBeRegistered=enroll
+      this.showTagMappingForm=1
+    },
+    mappedStudent:function(){
+      this.showTagMappingForm=0
+      this.enrollmentNumberToBeRegistered=null
     }
   },
   components:{
-    'create-student':createStudent
+    'create-student':createStudent,
+    'map-student':tagMap
   }
 }
 </script>
