@@ -58,7 +58,7 @@ export default {
     let url='https://still-harbor-14251.herokuapp.com/detail/'+this.studentRollNumber
     axios.get(url)
     .then(function(response){   
-        alert(response.status) 
+        // alert(response.status) 
         // console.log(response.data)
         if(response.status==200){
             scope.student=response.data
@@ -67,20 +67,21 @@ export default {
     .catch(function (error) {
         console.log(error);
     })
-
-    let urlLog='https://still-harbor-14251.herokuapp.com/Log/'+this.studentRollNumber
-    axios.get(urlLog)
-    .then(function(response){   
-        alert(response.status) 
-        // console.log(response.data);
-        if(response.status==200){
-            scope.attendance=response.data
-        }
-        
-    })
-    .catch(function (error) {
-        console.log(error);
-    })
+    setInterval(function(){ 
+        let urlLog='https://still-harbor-14251.herokuapp.com/Log/'+scope.studentRollNumber
+        axios.get(urlLog)
+        .then(function(response){   
+            // alert(response.status) 
+            // console.log(response.data);
+            if(response.status==200){
+                scope.attendance=response.data
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        }) 
+    }, 1000);
+    
   }
 }
 </script>

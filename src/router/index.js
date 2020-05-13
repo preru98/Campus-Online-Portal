@@ -27,9 +27,7 @@ Vue.use(VueRouter)
     path: '/elaborateStudentAdmin',
     name: 'ElaborateStudentAdmin',
     component: ElaborateStudentAdmin
-  },
-
-  
+  }
 ]
 
 const router = new VueRouter({

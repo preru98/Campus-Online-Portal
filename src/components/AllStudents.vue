@@ -2,6 +2,7 @@
   <div class="student-list">
     <button id="createStudent" v-on:click="create">Create Student</button>
     <create-student v-if="showCreateForm" v-on:created="addStudentToList"></create-student>
+    <update-student v-if="showUpdateForm" v-bind:student="studentToBeUpdated" v-on:updated="updateStudentInList"></update-student>
     <map-student v-if="showTagMappingForm" v-bind:rollNumber="enrollmentNumberToBeRegistered" v-on:mapped="mappedStudent"></map-student>
     <p>inside all sudents vue</p>
     <table v-if="allStudentsData.length" id="student-record" border="1 px">
@@ -12,6 +13,7 @@
         <th>Delete</th>
         <th>Map Tag</th>
         <th>Details</th>
+        <th>Update</th>
       </tr>
       <tr v-for="(student,index) in allStudentsData" :key="index">
         <td>{{student.name}}</td>
@@ -20,6 +22,7 @@
         <td><button v-on:click="deleteStudent(index)">Delete</button></td>
         <td><button v-on:click="mapStudent(index)">Map</button></td>
         <td><button v-on:click="detailStudent(index)">Details</button></td>
+        <td><button v-on:click="updateStudent(index)">Update</button></td>
 
       </tr>
     </table>
@@ -30,13 +33,14 @@
 <script>
 import * as axios from 'axios'
 import createStudent from './createStudent.vue'
+import updateStudent from './updateStudent.vue'
 import tagMap from './tagMap.vue'
 export default {
   mounted: function () {
     const scope=this
     axios.get('https://still-harbor-14251.herokuapp.com/')
       .then(function(response){   
-        alert(response.status) 
+        // alert(response.status) 
         console.log(response.data);
         scope.allStudentsData=response.data
         console.log(scope.products) //this.products
@@ -49,8 +53,10 @@ export default {
     return{
       allStudentsData:[],
       showCreateForm:0,
+      showUpdateForm:0,
       showTagMappingForm:0,
-      enrollmentNumberToBeRegistered:null
+      enrollmentNumberToBeRegistered:null,
+      studentToBeUpdated:null
       // allMappedStudents:[]
     }
   },
@@ -91,10 +97,19 @@ export default {
       localStorage.setItem('student-selected-for-detail',enroll)
       this.$router.push('/elaborateStudentAdmin')
     },
+    updateStudent:function(index){
+      this.studentToBeUpdated=this.allStudentsData[index]
+      this.showUpdateForm=1
+    },
+    updateStudentInList:function(student){
+      this.allStudentsData.push(student)
+      this.showUpdateForm=0
+    },
   },
   components:{
     'create-student':createStudent,
-    'map-student':tagMap
+    'map-student':tagMap,
+    'update-student':updateStudent,
   }
 }
 </script>
