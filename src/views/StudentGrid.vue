@@ -1,6 +1,6 @@
 <template>
   <div class="student-list">
-    <h3>STudent grid</h3>
+    <h3>Student grid</h3>
       <Students-List/>
   </div>
 </template>

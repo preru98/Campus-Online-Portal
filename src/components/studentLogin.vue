@@ -1,8 +1,8 @@
 <template>
-  <div id="login">
+  <div id="student-login">
     <form @submit.prevent="onSubmitLogin">
         <fieldset>
-            <legend>Admin Login</legend>
+            <legend>Student Login</legend>
 
             <label for="username">Username</label><br>
             <input v-model="username" type="text" id="username" name="username" required><br>
@@ -10,7 +10,7 @@
             <label for="password">Password</label><br>
             <input v-model="password" type="password" id="password" name="password" required><br>
             <input type="submit" value="LOG IN">
-            <button v-on:click="notify">Student Login</button>
+            <button v-on:click="notify">Admin Login</button>
         </fieldset> 
     </form>  
   </div>
@@ -28,27 +28,28 @@ import * as axios from 'axios'
         },
         methods:{
             onSubmitLogin:function(){
-                const scope=this
+
+                // const scope=this
                 alert('login successful '+ this.username+' will send data now')
 
-                axios.post('https://still-harbor-14251.herokuapp.com/adminLogin/', {
-                    username: this.username,
-                    password: this.password
-                })
-                .then(function (response) {
+                // axios.post('https://still-harbor-14251.herokuapp.com/adminLogin/', {
+                //     username: this.username,
+                //     password: this.password
+                // })
+                // .then(function (response) {
                     
-                    // alert(response.status)
-                    // alert(response.data.Authentication)
-                    if(response.status==200 && response.data.Authentication==true){
-                        alert("Transferring")
-                        scope.$router.push('/grid')
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error)
-                });
-                this.username=null
-                this.password=null
+                //     // alert(response.status)
+                //     // alert(response.data.Authentication)
+                //     if(response.status==200 && response.data.Authentication==true){
+                //         alert("Transferring")
+                //         scope.$router.push('/grid')
+                //     }
+                // })
+                // .catch(function (error) {
+                //     console.log(error)
+                // });
+                // this.username=null
+                // this.password=null
             },
             notify:function(){
                 this.$emit('toggle');

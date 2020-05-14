@@ -42,6 +42,7 @@ import * as axios from 'axios'
             onSubmitUpdate:function(){
                 console.log(this.student)
                 const scope=this
+                const config = { headers: {'Content-Type': 'application/json'} }
                 let url='https://still-harbor-14251.herokuapp.com/update/'+this.student.enrollmentNumber+'/'
                 axios.put(url, {
                     enrollmentNumber:this.enrollmentNumber,
@@ -49,7 +50,7 @@ import * as axios from 'axios'
                     course:this.course,
                     year:this.year,
                     password:this.password
-                })
+                },config)
                 .then(function (response) {
                     console.log(response)
                     alert(response.status)
