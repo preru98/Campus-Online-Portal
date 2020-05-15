@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import Grid from '../views/StudentGrid.vue'
 import ElaborateStudentAdmin from '../views/DetailStudentAdminView'
+import StudentPortal from '../views/StudentPortal.vue'
 
 Vue.use(VueRouter)
 
@@ -27,7 +28,12 @@ Vue.use(VueRouter)
     path: '/elaborateStudentAdmin',
     name: 'ElaborateStudentAdmin',
     component: ElaborateStudentAdmin
-  }
+  },
+  {
+    path: '/studentPortal',
+    name: 'EStudentPortal',
+    component: StudentPortal
+  },
 ]
 
 const router = new VueRouter({

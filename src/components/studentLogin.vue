@@ -28,28 +28,30 @@ import * as axios from 'axios'
         },
         methods:{
             onSubmitLogin:function(){
-
-                // const scope=this
+                const scope=this
                 alert('login successful '+ this.username+' will send data now')
 
-                // axios.post('https://still-harbor-14251.herokuapp.com/adminLogin/', {
-                //     username: this.username,
-                //     password: this.password
-                // })
-                // .then(function (response) {
-                    
-                //     // alert(response.status)
-                //     // alert(response.data.Authentication)
-                //     if(response.status==200 && response.data.Authentication==true){
-                //         alert("Transferring")
-                //         scope.$router.push('/grid')
-                //     }
-                // })
-                // .catch(function (error) {
-                //     console.log(error)
-                // });
-                // this.username=null
-                // this.password=null
+                axios.post('https://still-harbor-14251.herokuapp.com/studentLogin/', {
+                    username: this.username,
+                    password: this.password
+                })
+                .then(function (response) {
+                    // alert(response.status)
+                    // alert(response.data.Authentication)
+                    if(response.status==200 && response.data.Authentication==true){
+
+                        alert("Transferring you to your portal")
+                        alert(scope.username)
+                        localStorage.setItem('enrollment-number-of-student-provided-access-to-portal',scope.username)
+                        scope.$router.push('/studentPortal')
+                        scope.username=null
+                        scope.password=null
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+               
             },
             notify:function(){
                 this.$emit('toggle');
