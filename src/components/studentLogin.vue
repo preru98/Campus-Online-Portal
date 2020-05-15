@@ -38,7 +38,10 @@ import * as axios from 'axios'
                 .then(function (response) {
                     // alert(response.status)
                     // alert(response.data.Authentication)
-                    if(response.status==200 && response.data.Authentication==true){
+                    if(response.status==404){
+                        alert("No registered student found with enrollment number "+ scope.username)
+                    }
+                    else if(response.status==200 && response.data.Authentication==true){
 
                         alert("Transferring you to your portal")
                         alert(scope.username)
@@ -46,6 +49,9 @@ import * as axios from 'axios'
                         scope.$router.push('/studentPortal')
                         scope.username=null
                         scope.password=null
+                    }
+                    else{
+                        alert("Kindly enter correct password")
                     }
                 })
                 .catch(function (error) {
