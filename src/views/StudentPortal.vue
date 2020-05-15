@@ -2,7 +2,7 @@
   <div class="student-portal-access">
     <h1>This is student detail [Student view only]</h1>
     <h3>Roll Number : {{studentRollNumber}}</h3>
-    <button v-on:click="back">Back to student List</button>
+    <button v-on:click="logOut">Log Out</button>
     <h2>Student Detail</h2>
     <table id="student-detail" border="1 px">
       <tr>
@@ -37,8 +37,9 @@
 import * as axios from 'axios'
 export default {
   methods:{
-    back:function(){
-        this.$router.push('/grid')
+    logOut:function(){
+      localStorage.removeItem('enrollment-number-of-student-provided-access-to-portal')
+      this.$router.push('/')
     },
     showAllLogs:function(){
         this.showFullAttendance=1
