@@ -9,6 +9,7 @@
 
             <label for="password">Password</label><br>
             <input v-model="password" type="password" id="password" name="password" required><br>
+            
             <input type="submit" value="LOG IN">
             <button v-on:click="notify">Admin Login</button>
         </fieldset> 
@@ -29,20 +30,12 @@ import * as axios from 'axios'
         methods:{
             onSubmitLogin:function(){
                 const scope=this
-                alert('login successful '+ this.username+' will send data now')
-
                 axios.post('https://still-harbor-14251.herokuapp.com/studentLogin/', {
                     username: this.username,
                     password: this.password
                 })
                 .then(function (response) {
-                    // alert(response.status)
-                    // alert(response.data.Authentication)
-                    if(response.status==404){
-                        alert("No registered student found with enrollment number "+ scope.username)
-                    }
-                    else if(response.status==200 && response.data.Authentication==true){
-
+                    if(response.status==200 && response.data.Authentication==true){
                         alert("Transferring you to your portal")
                         alert(scope.username)
                         localStorage.setItem('enrollment-number-of-student-provided-access-to-portal',scope.username)
@@ -50,14 +43,21 @@ import * as axios from 'axios'
                         scope.username=null
                         scope.password=null
                     }
-                    else{
+                    if(response.status==200 && response.data.Authentication==false){
                         alert("Kindly enter correct password")
+                        document.getElementById('password').focus()
+                        scope.password=null
                     }
                 })
                 .catch(function (error) {
+                    if(error.response.status==404){
+                        alert("No registered student found with enrollment number "+ scope.username)
+                        document.getElementById('username').focus()
+                        scope.username=null
+                        scope.password=null
+                    }
                     console.log(error)
                 });
-               
             },
             notify:function(){
                 this.$emit('toggle');
