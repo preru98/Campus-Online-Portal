@@ -29,26 +29,33 @@ import * as axios from 'axios'
         methods:{
             onSubmitLogin:function(){
                 const scope=this
-                alert('login successful '+ this.username+' will send data now')
-
+                // alert('login successful '+ this.username+' will send data now')
                 axios.post('https://still-harbor-14251.herokuapp.com/adminLogin/', {
                     username: this.username,
                     password: this.password
                 })
                 .then(function (response) {
-                    
-                    // alert(response.status)
-                    // alert(response.data.Authentication)
                     if(response.status==200 && response.data.Authentication==true){
-                        alert("Transferring")
+                        alert("Transferring you to admin panel")
+                        localStorage.setItem('accessProvidedToAdmin',scope.username)
                         scope.$router.push('/grid')
+                        scope.username=null
+                        scope.password=null
+                    }
+                    if(response.status==200 && response.data.Authentication==false){
+                        alert("Kindly enter correct password")
+                        document.getElementById('password').focus()
+                        scope.password=null
                     }
                 })
                 .catch(function (error) {
-                    console.log(error)
+                    if(error.response.status==404){
+                        alert("No registered admin found with this username "+ scope.username)
+                        document.getElementById('username').focus()
+                        scope.username=null
+                        scope.password=null
+                    }
                 });
-                this.username=null
-                this.password=null
             },
             notify:function(){
                 this.$emit('toggle');

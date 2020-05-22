@@ -38,7 +38,7 @@ import * as axios from 'axios'
                     if(response.status==200 && response.data.Authentication==true){
                         alert("Transferring you to your portal")
                         alert(scope.username)
-                        localStorage.setItem('enrollment-number-of-student-provided-access-to-portal',scope.username)
+                        localStorage.setItem('enrollmentNumberOfStudentProvidedAccessToPortal',scope.username)
                         scope.$router.push('/studentPortal')
                         scope.username=null
                         scope.password=null

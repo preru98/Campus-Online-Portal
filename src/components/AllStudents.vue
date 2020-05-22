@@ -27,6 +27,7 @@
       </tr>
     </table>
     <p v-else>No students are registered</p>
+    <button v-on:click="logOut">Log Out</button>
   </div>
 </template>
 
@@ -56,7 +57,7 @@ export default {
       showUpdateForm:0,
       showTagMappingForm:0,
       enrollmentNumberToBeRegistered:null,
-      studentToBeUpdated:null
+      studentToBeUpdated:null,
       // allMappedStudents:[]
     }
   },
@@ -105,6 +106,10 @@ export default {
       this.allStudentsData.push(student)
       this.showUpdateForm=0
     },
+    logOut:function(){
+      localStorage.removeItem('accessProvidedToAdmin')
+      this.$router.push('/')
+    }
   },
   components:{
     'create-student':createStudent,

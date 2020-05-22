@@ -47,7 +47,7 @@ export default {
   },
   data:function(){
     return{
-        studentRollNumber:localStorage.getItem('enrollment-number-of-student-provided-access-to-portal'),
+        studentRollNumber:localStorage.getItem('enrollmentNumberOfStudentProvidedAccessToPortal'),
         student:{},
         attendance:[],
         showFullAttendance:0
