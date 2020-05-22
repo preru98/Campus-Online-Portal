@@ -29,7 +29,6 @@ import * as axios from 'axios'
         methods:{
             onSubmitLogin:function(){
                 const scope=this
-                // alert('login successful '+ this.username+' will send data now')
                 axios.post('https://still-harbor-14251.herokuapp.com/adminLogin/', {
                     username: this.username,
                     password: this.password
